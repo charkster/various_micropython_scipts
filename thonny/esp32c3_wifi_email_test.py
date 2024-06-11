@@ -4,8 +4,8 @@ import network
 
 def connect_to_wifi():
     # Your network credentials
-    ssid = '0024A515BC7E'
-    password = 'x3p08mh52h257'
+    ssid = 'ssid_123'
+    password = 'PASSWORD'
     #Connect to Wi-Fi
     wlan = network.WLAN(network.STA_IF)
     time.sleep_ms(1000)

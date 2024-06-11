@@ -1,6 +1,6 @@
 import machine
 
-machine.freq(500_000_000)
+#machine.freq(500_000_000)
 p0 = Pin('D0', Pin.OUT) # create output pin on GPIO0
 
 for n in range(0,100):

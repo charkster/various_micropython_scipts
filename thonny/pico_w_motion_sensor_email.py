@@ -7,8 +7,8 @@ import utime
 
 def connect_to_wifi():
     # Your network credentials
-    ssid = 'ssid_123'
-    password = 'PASSWORD'
+    ssid = '0024A515BC7E'
+    password = 'x3p08mh52h257'
     #Connect to Wi-Fi
     wlan = network.WLAN(network.STA_IF)
     time.sleep_ms(1000)

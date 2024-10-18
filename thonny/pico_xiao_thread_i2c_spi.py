@@ -2,6 +2,7 @@ import machine
 import _thread
 
 i2c=machine.I2C(1,sda=machine.Pin(6), scl=machine.Pin(7), freq=400000) #xiao rp2040
+#i2c.readfrom(0x24, 1)
 
 spi = machine.SPI(0,
                   baudrate=1000000,

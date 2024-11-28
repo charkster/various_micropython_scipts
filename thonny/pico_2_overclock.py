@@ -34,7 +34,7 @@ mem32[0X40100000+0X0C]=0b0101101011111110_0000000011010000
 # RP2350 Datasheet page454
 # BITS 8:4 01101 / SET VOLTAGE to 1.2 / default is 1.1
 
-machine.freq(340_000_000) ###
+machine.freq(320_000_000) ###
 
 while True:
      temperature = ReadTemperature()

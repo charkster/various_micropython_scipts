@@ -7,7 +7,7 @@ import utime
 
 def connect_to_wifi():
     # Your network credentials
-    ssid = '0024A515BC7F'
+    ssid = '0024A515BC7AX'
     password = 'x3p08mh52h257'
     #Connect to Wi-Fi
     wlan = network.WLAN(network.STA_IF)
@@ -29,14 +29,19 @@ def connect_to_wifi():
     # Manage connection errors
     if wlan.status() == 1010:
         print('connected')
-        ntptime.settime() # this is GMT, not Phoenix
-        rtc = machine.RTC()
-        utc_shift = -7
-        tm = utime.localtime(utime.mktime(utime.localtime()) + utc_shift*3600)
-        tm = tm[0:3] + (0,) + tm[3:6] + (0,)
-        rtc.datetime(tm)
+        try:
+            ntptime.settime() # this is GMT, not Phoenix
+            rtc = machine.RTC()
+            utc_shift = -7
+            tm = utime.localtime(utime.mktime(utime.localtime()) + utc_shift*3600)
+            tm = tm[0:3] + (0,) + tm[3:6] + (0,)
+            rtc.datetime(tm)
+            return True
+        except:
+            pass
     else:
         print(wlan.status())
+        return False
 
 def disconnect_from_wifi():
     wlan = network.WLAN(network.STA_IF)
@@ -69,6 +74,7 @@ def sendEmail():
     csv_file = 'adc_logfile.csv'
     smtp.write('Content-Type: text/csv; name=' + csv_file + '\n')
     smtp.write('Content-Disposition: attachment; filename=' + csv_file + '\n\n')
+    content = ''
     try:
         with open(csv_file, 'r') as infile:
             content = infile.read()
@@ -81,6 +87,11 @@ def sendEmail():
     disconnect_from_wifi()
 
 def main():
+    try:
+        time.sleep(10)
+    except KeyboardInterrupt:
+        print("HALT!!!!")
+        return -1 # allow ctrl-c to stop main.py in first 10 seconds
     vbus_div2 = machine.ADC(machine.Pin(1)) # two 120k resistor divider for VBUS
     vbus_div2.atten(machine.ADC.ATTN_11DB) # use 3.3V range
     f = open('adc_logfile.csv', 'w')
@@ -89,14 +100,16 @@ def main():
         while True:
             vbus_mv = int(vbus_div2.read_uv()*2/1e3) # millivolt
             f.write("{:d}\n".format(vbus_mv))
-#            machine.deepsleep(60*1000) # 60 seconds
-            time.sleep(60)
+            machine.lightsleep(60*1000) # 60 seconds
+#            time.sleep(60)
             minute_count += 1
-            if (minute_count == 3):
-                connect_to_wifi()
-                time.sleep_ms(1000)
-                sendEmail()
-                minute_count = 0
+            if (minute_count >= 3):
+                if (connect_to_wifi()):
+                    f.close()
+                    time.sleep_ms(1000)
+                    sendEmail()
+                    f = open('adc_logfile.csv', 'a')
+                    minute_count = 0
     except KeyboardInterrupt:
         f.close()
 

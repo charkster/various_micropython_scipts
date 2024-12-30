@@ -25,22 +25,23 @@ IC_FS_SPKLEN_0   = I2C0_BASE   + 0xA0
 IC_FS_SPKLEN_1   = I2C1_BASE   + 0xA0
 CLK_SYS_DIV      = CLOCKS_BASE + 0x40
 
-print("IC_ENABLE_0 enable is {:d}".format((mem32[IC_ENABLE_0] & 0x00000001))) # bit [0] is enable
-print("IC_CON_0 speed is {:d}".format((mem32[IC_CON_0] & 0x00000006)>>1)) # bits [2:1] are speed
-print("IC_SS_SCL_HCNT_0 is {:d}".format(mem32[IC_SS_SCL_HCNT_0] & 0x0000FFFF)) # lower 16bits
-print("IC_SS_SCL_LCNT_0 is {:d}".format(mem32[IC_SS_SCL_LCNT_0] & 0x0000FFFF)) # lower 16bits
-print("IC_FS_SCL_HCNT_0 is {:d}".format(mem32[IC_FS_SCL_HCNT_0] & 0x0000FFFF)) # lower 16bits
-print("IC_FS_SCL_LCNT_0 is {:d}".format(mem32[IC_FS_SCL_LCNT_0] & 0x0000FFFF)) # lower 16bits
-print("IC_FS_SPKLEN_0 is {:d}".format(mem32[IC_FS_SPKLEN_0] & 0x000000FF)) # lower 8bits
-print("IC_ENABLE_1 enable is {:d}".format((mem32[IC_ENABLE_1] & 0x00000001))) # bit [0] is enable
-print("IC_CON_1 speed is {:d}".format((mem32[IC_CON_1] & 0x00000006)>>1)) # bits [2:1] are speed
-print("IC_SS_SCL_HCNT_1 is {:d}".format(mem32[IC_SS_SCL_HCNT_1] & 0x0000FFFF)) # lower 16bits
-print("IC_SS_SCL_LCNT_1 is {:d}".format(mem32[IC_SS_SCL_LCNT_1] & 0x0000FFFF)) # lower 16bits
-print("IC_FS_SCL_HCNT_1 is {:d}".format(mem32[IC_FS_SCL_HCNT_1] & 0x0000FFFF)) # lower 16bits
-print("IC_FS_SCL_LCNT_1 is {:d}".format(mem32[IC_FS_SCL_LCNT_1] & 0x0000FFFF)) # lower 16bits
-print("IC_FS_SPKLEN_1 is {:d}".format(mem32[IC_FS_SPKLEN_1] & 0x000000FF)) # lower 8bits
-print("CLK_SYS_DIV_INT  is {:d}".format((mem32[CLK_SYS_DIV] & 0xFFFFFF00)>>8)) # bits [31:8] are INT div
-print("CLK_SYS_DIV_FRAC is {:d}".format((mem32[CLK_SYS_DIV] & 0x000000FF))) # bits [8:0] are Fractional div
+def print_regs():
+    print("IC_ENABLE_0 enable is {:d}".format((mem32[IC_ENABLE_0] & 0x00000001))) # bit [0] is enable
+    print("IC_CON_0 speed is {:d}".format((mem32[IC_CON_0] & 0x00000006)>>1)) # bits [2:1] are speed
+    print("IC_SS_SCL_HCNT_0 is {:d}".format(mem32[IC_SS_SCL_HCNT_0] & 0x0000FFFF)) # lower 16bits
+    print("IC_SS_SCL_LCNT_0 is {:d}".format(mem32[IC_SS_SCL_LCNT_0] & 0x0000FFFF)) # lower 16bits
+    print("IC_FS_SCL_HCNT_0 is {:d}".format(mem32[IC_FS_SCL_HCNT_0] & 0x0000FFFF)) # lower 16bits
+    print("IC_FS_SCL_LCNT_0 is {:d}".format(mem32[IC_FS_SCL_LCNT_0] & 0x0000FFFF)) # lower 16bits
+    print("IC_FS_SPKLEN_0 is {:d}".format(mem32[IC_FS_SPKLEN_0] & 0x000000FF)) # lower 8bits
+    print("IC_ENABLE_1 enable is {:d}".format((mem32[IC_ENABLE_1] & 0x00000001))) # bit [0] is enable
+    print("IC_CON_1 speed is {:d}".format((mem32[IC_CON_1] & 0x00000006)>>1)) # bits [2:1] are speed
+    print("IC_SS_SCL_HCNT_1 is {:d}".format(mem32[IC_SS_SCL_HCNT_1] & 0x0000FFFF)) # lower 16bits
+    print("IC_SS_SCL_LCNT_1 is {:d}".format(mem32[IC_SS_SCL_LCNT_1] & 0x0000FFFF)) # lower 16bits
+    print("IC_FS_SCL_HCNT_1 is {:d}".format(mem32[IC_FS_SCL_HCNT_1] & 0x0000FFFF)) # lower 16bits
+    print("IC_FS_SCL_LCNT_1 is {:d}".format(mem32[IC_FS_SCL_LCNT_1] & 0x0000FFFF)) # lower 16bits
+    print("IC_FS_SPKLEN_1 is {:d}".format(mem32[IC_FS_SPKLEN_1] & 0x000000FF)) # lower 8bits
+    print("CLK_SYS_DIV_INT  is {:d}".format((mem32[CLK_SYS_DIV] & 0xFFFFFF00)>>8)) # bits [31:8] are INT div
+    print("CLK_SYS_DIV_FRAC is {:d}".format((mem32[CLK_SYS_DIV] & 0x000000FF))) # bits [8:0] are Fractional div
 
 # rp2040 xiao
 #i2c = machine.I2C(1,scl=machine.Pin(7), sda=machine.Pin(6),freq=400000)
@@ -66,7 +67,8 @@ print("IC_FS_SCL_LCNT_1 is {:d}".format(mem32[IC_FS_SCL_LCNT_1] & 0x0000FFFF)) #
 print("CLK_SYS_DIV_INT  is {:d}".format((mem32[CLK_SYS_DIV] & 0xFFFFFF00)>>8)) # bits [31:8] are INT div
 print("CLK_SYS_DIV_FRAC is {:d}".format((mem32[CLK_SYS_DIV] & 0x000000FF))) # bits [8:0] are Fractional div
 
-#mem32[IC_ENABLE_0] = 0
-mem32[IC_ENABLE_1] = 0
-mem32[IC_FS_SCL_HCNT_1] = 187
-mem32[IC_FS_SCL_LCNT_1] = 126
+mem32[IC_ENABLE_0] = 0
+mem32[IC_FS_SCL_HCNT_0] = 100
+mem32[IC_FS_SCL_LCNT_0] = 80
+mem32[IC_FS_SPKLEN_0] = 5
+mem32[IC_ENABLE_0] = 1

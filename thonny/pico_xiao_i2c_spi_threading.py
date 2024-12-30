@@ -1,4 +1,5 @@
 import machine
+import _thread
 
 i2c=machine.I2C(1,sda=machine.Pin(6), scl=machine.Pin(7), freq=400000) #xiao rp2040
 #i2c.readfrom(0x24, 1)
@@ -16,13 +17,10 @@ spi = machine.SPI(0,
 spi_cs = machine.Pin(1, machine.Pin.OUT)
 spi_cs.value(1) # active low
 
-# Adafruit i2c fram is 0x50
-data_list = list(i2c.readfrom_mem(0x50,0x0000,8,addrsize=16))
-print(list(map(hex, data_list)))
-i2c.writeto_mem(0x50, 0x0000, bytearray([0x03, 0x02, 0x01, 0x00]),addrsize=16)
-data_list = list(i2c.readfrom_mem(0x50, 0x00, 8, addrsize=16))
-print(list(map(hex, data_list)))
-
+def core0_thread():
+    # Adafruit i2c fram is 0x50
+    data_list = list(i2c.readfrom_mem(0x50,0x0000,8,addrsize=16))
+    print(list(map(hex, data_list)))
 
 # Adafruit spi fram commands
 _NULL_DATA = 0x00
@@ -33,11 +31,18 @@ _READ_CMD  = 0x03
 _RDID_CMD  = 0x9F
 
 read_bytes = bytearray([_NULL_DATA] * 13)
+def core1_thread():
+    spi_cs.value(0) 
+    spi.write_readinto(bytearray([_READ_CMD, 0x00, 0x00] + _READ_SPACE_LIST),read_bytes)
+    spi_cs.value(1) 
+    print(list(read_bytes))
 
-spi_cs.value(0) 
-spi.write_readinto(bytearray([_READ_CMD, 0x00, 0x00] + _READ_SPACE_LIST),read_bytes)
-spi_cs.value(1) 
-print(list(read_bytes))
+second_thread = _thread.start_new_thread(core1_thread, ())
+core0_thread()
+
+i2c.writeto_mem(0x50, 0x0000, bytearray([0x03, 0x02, 0x01, 0x00]),addrsize=16)
+data_list = list(i2c.readfrom_mem(0x50, 0x00, 8, addrsize=16))
+print(list(map(hex, data_list)))
 
 spi_cs.value(0) 
 spi.write(bytearray([_WREN_CMD]))

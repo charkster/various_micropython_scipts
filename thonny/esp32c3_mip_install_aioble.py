@@ -10,8 +10,8 @@ import ubinascii
 
 def connect_to_wifi():
     # Your network credentials
-    ssid = '0024A515BC7AX'
-    password = 'x3p08mh52h257'
+    ssid = 'SSID_HERE'
+    password = 'PASSWORD_HERE'
     #Connect to Wi-Fi
     wlan = network.WLAN(network.STA_IF)
     wlan.ifconfig(('192.168.0.211', '255.255.255.0', '192.168.0.1', '205.171.3.25'))

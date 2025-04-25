@@ -1,5 +1,5 @@
-import machine
 import umail
+import machine
 import network
 import time
 import ntptime
@@ -9,7 +9,7 @@ p21 = machine.Pin(21, machine.Pin.IN, machine.Pin.PULL_DOWN)
 
 def connect_to_wifi():
     # Your network credentials
-    ssid = '0024A515BC7E'
+    ssid = '0024A515BC7AX'
     password = 'x3p08mh52h257'
     #Connect to Wi-Fi
     wlan = network.WLAN(network.STA_IF)

@@ -51,10 +51,10 @@ def sendEmail():
     #initialize SMTP server and login
     smtp = umail.SMTP('smtp.gmail.com', 465, ssl=True)
     # Email details
-    sender_email = 'azstanfordfamily@gmail.com'
+    sender_email = 'your_email_address@company.com'
     sender_name = 'pico email'
-    sender_app_password = 'eueewczhxrmeuhph'
-    recipient_email ='charkster@gmail.com'
+    sender_app_password = 'PASSWORD'
+    recipient_email ='your_receive_email_address@company.com'
     email_subject ='ESP32C3 ADC CSV file'
     smtp.login(sender_email, sender_app_password)
     smtp.to(recipient_email)

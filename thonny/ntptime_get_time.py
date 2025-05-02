@@ -6,8 +6,8 @@ import ntptime
 
 def connect_wifi():
     # Your network credentials
-    ssid = '0024A515BC7E'
-    password = 'x3p08mh52h257'
+    ssid = 'YOUR_SSID'
+    password = 'YOUR_PASSWORD'
     #Connect to Wi-Fi
     wlan = network.WLAN(network.STA_IF)
     wlan.ifconfig(('192.168.0.201', '255.255.255.0', '192.168.0.1', '205.171.3.25'))

@@ -7,8 +7,8 @@ import utime
 
 def connect_to_wifi():
     # Your network credentials
-    ssid = '0024A515BC7E'
-    password = 'x3p08mh52h257'
+    ssid = 'YOUR_SSID'
+    password = 'YOUR_PASSWORD'
     #Connect to Wi-Fi
     wlan = network.WLAN(network.STA_IF)
     time.sleep_ms(1000)
@@ -43,10 +43,10 @@ def sendEmail():
     #initialize SMTP server and login
     smtp = umail.SMTP('smtp.gmail.com', 465, ssl=True)
     # Email details
-    sender_email = 'azstanfordfamily@gmail.com'
+    sender_email = 'sender_email_account@gmail.com'
     sender_name = 'pico email'
-    sender_app_password = 'eueewczhxrmeuhph'
-    recipient_email ='charkster@gmail.com'
+    sender_app_password = 'YOUR_PASSWORD'
+    recipient_email ='receive_email_account@gmail.com'
     email_subject ='MCU Motion Detect'
     smtp.login(sender_email, sender_app_password)
     smtp.to(recipient_email)
